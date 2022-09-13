@@ -3,6 +3,7 @@ package entities;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -77,4 +78,18 @@ public class Employee
         this.customers = customers;
     }
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof Employee)) return false;
+        Employee employee = (Employee) o;
+        return getId().equals(employee.getId());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(getId());
+    }
 }

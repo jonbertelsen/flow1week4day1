@@ -91,7 +91,7 @@ public class RenameMeResourceTest {
                 .get("/xxx/").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("msg", equalTo("Hello World"));
+                .body("msg", equalTo("Hello Employee"));
     }
 
     @Test
