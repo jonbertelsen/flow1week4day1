@@ -1,5 +1,6 @@
 package facades;
 
+import dtos.EmployeeDTO;
 import entities.Employee;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +20,7 @@ class EmployeeFacadeTest
 {
     private static EntityManagerFactory emf;
     private static EmployeeFacade facade;
-    private Employee e1, e2, e3;
+    private EmployeeDTO e1, e2, e3;
 
 
     @BeforeAll
@@ -47,15 +48,15 @@ class EmployeeFacadeTest
     @Test
     void getEmployeeById()
     {
-        Employee actual = facade.getEmployeeById(e1.getId());
-        Employee expected = e1;
+        EmployeeDTO actual = facade.getEmployeeById(e1.getId());
+        EmployeeDTO expected = e1;
         assertEquals(expected, actual);
     }
 
     @Test
     void getEmployeesByName()
     {
-        List<Employee> actual = facade.getEmployeesByName("Joachim Von And");
+        List<EmployeeDTO> actual = facade.getEmployeesByName("Joachim Von And");
         assertEquals(1, actual.size());
         assertEquals(e3, actual.get(0));
     }
@@ -63,7 +64,7 @@ class EmployeeFacadeTest
     @Test
     void getAllEmployees()
     {
-        List<Employee> actual = facade.getAllEmployees();
+        List<EmployeeDTO> actual = facade.getAllEmployees();
         assertEquals(3, actual.size());
         assertThat(actual, containsInAnyOrder(e1, e2, e3));
     }
@@ -71,7 +72,7 @@ class EmployeeFacadeTest
     @Test
     void getEmployeesWithHighestSalary()
     {
-        List<Employee> actual = facade.getEmployeesWithHighestSalary();
+        List<EmployeeDTO> actual = facade.getEmployeesWithHighestSalary();
         assertEquals(1, actual.size());
         assertEquals(e3, actual.get(0));
     }
@@ -79,8 +80,8 @@ class EmployeeFacadeTest
     @Test
     void createEmployee()
     {
-        Employee e4 = facade.createEmployee("Andersine", 45000);
-        List<Employee> actual = facade.getAllEmployees();
+        EmployeeDTO e4 = facade.createEmployee("Andersine", 45000);
+        List<EmployeeDTO> actual = facade.getAllEmployees();
         assertEquals(4, actual.size());
         assertThat(actual, containsInAnyOrder(e1, e2, e3, e4));
 
