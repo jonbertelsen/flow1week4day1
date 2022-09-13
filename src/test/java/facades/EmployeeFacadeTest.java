@@ -1,6 +1,5 @@
 package facades;
 
-import dtos.EmployeeDTO;
 import entities.Employee;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,8 +8,6 @@ import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.NamedQuery;
-import javax.persistence.Query;
 
 import java.util.List;
 

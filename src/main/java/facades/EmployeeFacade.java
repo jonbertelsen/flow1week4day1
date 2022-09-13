@@ -1,6 +1,5 @@
 package facades;
 
-import dtos.EmployeeDTO;
 import entities.Employee;
 
 import javax.persistence.EntityManager;
