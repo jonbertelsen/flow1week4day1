@@ -1,5 +1,6 @@
 package facades;
 
+import dtos.EmployeeDTO;
 import entities.Employee;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,6 +9,7 @@ import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NamedQuery;
 import javax.persistence.Query;
 
 import java.util.List;
@@ -36,8 +38,7 @@ class EmployeeFacadeTest
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
-        Query query = em.createQuery("delete from Employee e");
-        query.executeUpdate();
+            em.createNamedQuery("Employee.deleteAll").executeUpdate();
         em.getTransaction().commit();
         em.close();
 
@@ -49,8 +50,8 @@ class EmployeeFacadeTest
     @Test
     void getEmployeeById()
     {
-        Employee actual = facade.getEmployeeById(e1.getId());
-        Employee expected = e1;
+        EmployeeDTO actual = facade.getEmployeeById(e1.getId());
+        EmployeeDTO expected = new EmployeeDTO(e1);
         assertEquals(expected, actual);
     }
 
@@ -85,5 +86,6 @@ class EmployeeFacadeTest
         List<Employee> actual = facade.getAllEmployees();
         assertEquals(4, actual.size());
         assertThat(actual, containsInAnyOrder(e1, e2, e3, e4));
+
     }
 }

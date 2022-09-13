@@ -1,5 +1,6 @@
 package facades;
 
+import dtos.EmployeeDTO;
 import entities.Employee;
 
 import javax.persistence.EntityManager;
@@ -28,12 +29,20 @@ public class EmployeeFacade
         return emf.createEntityManager();
     }
 
-    public Employee getEmployeeById(int id)
+    public EmployeeDTO getEmployeeById(int id)
     {
         EntityManager em = getEntityManager();
         try
         {
-            return em.find(Employee.class, id);
+            Employee e = em.find(Employee.class, id);
+            if (e != null)
+            {
+                return new EmployeeDTO(e);
+            }
+            else
+            {
+                return null;
+            }
         }
         finally
         {

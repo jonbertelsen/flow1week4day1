@@ -8,6 +8,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "employee")
+@NamedQueries({
+        @NamedQuery(name = "Employee.deleteAll", query = "delete from Employee e")
+})
+
 public class Employee
 {
     @Id
