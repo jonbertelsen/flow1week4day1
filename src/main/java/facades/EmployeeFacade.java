@@ -29,7 +29,7 @@ public class EmployeeFacade
         return emf.createEntityManager();
     }
 
-    public EmployeeDTO getEmployeeById(int id)
+    public Employee getEmployeeById(int id)
     {
         EntityManager em = getEntityManager();
         try
@@ -37,7 +37,7 @@ public class EmployeeFacade
             Employee e = em.find(Employee.class, id);
             if (e != null)
             {
-                return new EmployeeDTO(e);
+                return e;
             }
             else
             {

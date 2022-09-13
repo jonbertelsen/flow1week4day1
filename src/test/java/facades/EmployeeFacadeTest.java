@@ -50,8 +50,8 @@ class EmployeeFacadeTest
     @Test
     void getEmployeeById()
     {
-        EmployeeDTO actual = facade.getEmployeeById(e1.getId());
-        EmployeeDTO expected = new EmployeeDTO(e1);
+        Employee actual = facade.getEmployeeById(e1.getId());
+        Employee expected = e1;
         assertEquals(expected, actual);
     }
 
