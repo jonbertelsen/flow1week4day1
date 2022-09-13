@@ -62,11 +62,13 @@ public class EmployeeResource
         return GSON.toJson(facade.getEmployeesByName(name));
     }
 
-
-
-
-
-
-
+    @GET
+    @Path("populate")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String populate()
+    {
+        facade.populateDB();
+        return "{\"msg\":\"DB populated\"}";
+    }
 
 }

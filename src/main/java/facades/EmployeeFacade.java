@@ -1,7 +1,10 @@
 package facades;
 
 import dtos.EmployeeDTO;
+import dtos.RenameMeDTO;
 import entities.Employee;
+import entities.RenameMe;
+import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -115,6 +118,17 @@ public class EmployeeFacade
         {
             em.close();
         }
-
     }
+
+    public void populateDB(){
+        FacadeExample fe = FacadeExample.getFacadeExample(emf);
+        fe.create(new RenameMeDTO(new RenameMe("First 1", "Last 1")));
+        fe.create(new RenameMeDTO(new RenameMe("First 2", "Last 2")));
+        fe.create(new RenameMeDTO(new RenameMe("First 3", "Last 3")));
+
+        createEmployee("Anders And", 25000);
+        createEmployee("Fætter Højben", 28000);
+        createEmployee("Joachim Von And", 30000);
+    }
+
 }
