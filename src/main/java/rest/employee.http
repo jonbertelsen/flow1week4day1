@@ -9,3 +9,17 @@ Accept: application/json
 ### Get By ID
 GET http://localhost:8080/restdemo/api/employee/5
 Accept: application/json
+
+### Get by name
+GET http://localhost:8080/restdemo/api/employee/name/anders and
+Accept: application/json
+
+### Create new Employee
+POST http://localhost:8080/restdemo/api/employee
+Content-Type: application/json
+
+{
+  "name": "Fætter Guf",
+  "salary": 36000
+}
+

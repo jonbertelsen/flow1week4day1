@@ -46,8 +46,40 @@ public class EmployeeResource
         return GSON.toJson(employeeDTO);
     }
 
+    @GET
+    @Path("highestpaid")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getHigestPaid()
+    {
+        List<EmployeeDTO> employeeList = FACADE.getEmployeesWithHighestSalary();
+        return GSON.toJson(employeeList);
+    }
 
+    @GET
+    @Path("name/{name}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getById(@PathParam("name") String name)
+    {
+        List<EmployeeDTO> employeeDTO = FACADE.getEmployeesByName(name);
+        return GSON.toJson(employeeDTO);
+    }
 
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public String createEmployee(String input)
+    {
+        EmployeeDTO employeeDTO = GSON.fromJson(input, EmployeeDTO.class);
+        EmployeeDTO newEmployee = FACADE.createEmployee(employeeDTO.getName(), employeeDTO.getSalary());
+        return GSON.toJson(newEmployee);
+    }
+
+    /*
+{
+  "name": "Fætter Højben",
+  "salary": 28000
+}
+*/
 
 
 }

@@ -22,7 +22,7 @@ class EmployeeFacadeTest
 {
     private static EntityManagerFactory emf;
     private static EmployeeFacade facade;
-    private Employee e1, e2, e3;
+    private EmployeeDTO e1, e2, e3;
 
 
     @BeforeAll
@@ -51,14 +51,14 @@ class EmployeeFacadeTest
     void getEmployeeById()
     {
         EmployeeDTO actual = facade.getEmployeeById(e1.getId());
-        EmployeeDTO expected = new EmployeeDTO(e1);
+        EmployeeDTO expected = e1;
         assertEquals(expected, actual);
     }
 
     @Test
     void getEmployeesByName()
     {
-        List<Employee> actual = facade.getEmployeesByName("Joachim Von And");
+        List<EmployeeDTO> actual = facade.getEmployeesByName("Joachim Von And");
         assertEquals(1, actual.size());
         assertEquals(e3, actual.get(0));
     }
@@ -68,13 +68,13 @@ class EmployeeFacadeTest
     {
         List<EmployeeDTO> actual = facade.getAllEmployees();
         assertEquals(3, actual.size());
-        assertThat(actual, containsInAnyOrder( new EmployeeDTO(e1), new EmployeeDTO(e2), new EmployeeDTO(e3)));
+        assertThat(actual, containsInAnyOrder(e1, e2, e3));
     }
 
     @Test
     void getEmployeesWithHighestSalary()
     {
-        List<Employee> actual = facade.getEmployeesWithHighestSalary();
+        List<EmployeeDTO> actual = facade.getEmployeesWithHighestSalary();
         assertEquals(1, actual.size());
         assertEquals(e3, actual.get(0));
     }
@@ -82,11 +82,10 @@ class EmployeeFacadeTest
     @Test
     void createEmployee()
     {
-        Employee e4 = facade.createEmployee("Andersine", 45000);
+        EmployeeDTO e4 = facade.createEmployee("Andersine", 45000);
         List<EmployeeDTO> actual = facade.getAllEmployees();
         assertEquals(4, actual.size());
-        assertThat(actual, containsInAnyOrder(
-                new EmployeeDTO(e1), new EmployeeDTO(e2), new EmployeeDTO(e3), new EmployeeDTO(e4)));
+        assertThat(actual, containsInAnyOrder(e1, e2, e3, e4));
 
     }
 }

@@ -51,14 +51,14 @@ public class EmployeeFacade
         }
     }
 
-    public List<Employee> getEmployeesByName(String name)
+    public List<EmployeeDTO> getEmployeesByName(String name)
     {
         EntityManager em = getEntityManager();
         try
         {
             TypedQuery<Employee> query = em.createQuery("SELECT e FROM Employee e WHERE e.name = :name", Employee.class);
             query.setParameter("name", name);
-            return query.getResultList();
+            return EmployeeDTO.getDTOList(query.getResultList());
         }
         finally
         {
@@ -81,14 +81,14 @@ public class EmployeeFacade
     }
 
     //
-    public List<Employee> getEmployeesWithHighestSalary()
+    public List<EmployeeDTO> getEmployeesWithHighestSalary()
     {
         EntityManager em = getEntityManager();
         try
         {
             TypedQuery<Employee> query = em.createQuery(
                     "SELECT e FROM Employee e where e.salary = (select max(e.salary) FROM Employee e)", Employee.class);
-            return query.getResultList();
+            return EmployeeDTO.getDTOList(query.getResultList());
         }
         finally
         {
@@ -97,7 +97,7 @@ public class EmployeeFacade
     }
 
 
-    public Employee createEmployee(String name, int salary_per_month)
+    public EmployeeDTO createEmployee(String name, int salary_per_month)
     {
         EntityManager em = getEntityManager();
         try
@@ -110,7 +110,7 @@ public class EmployeeFacade
             em.getTransaction().begin();
                 em.persist(newEmployee);
             em.getTransaction().commit();
-            return newEmployee;
+            return new EmployeeDTO(newEmployee);
         }
         finally
         {

@@ -21,6 +21,7 @@ public class EmployeeDTO
         this.salary = employee.getSalary();
     }
 
+
     public int getId()
     {
         return id;
