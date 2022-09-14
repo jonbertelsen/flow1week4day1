@@ -17,15 +17,21 @@ import utils.EMF_Creator;
 public class Populator {
     public static void populate(){
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
-        FacadeExample fe = FacadeExample.getFacadeExample(emf);
+  /*      FacadeExample fe = FacadeExample.getFacadeExample(emf);
         fe.create(new RenameMeDTO(new RenameMe("First 1", "Last 1")));
         fe.create(new RenameMeDTO(new RenameMe("First 2", "Last 2")));
         fe.create(new RenameMeDTO(new RenameMe("First 3", "Last 3")));
-
+*/
         EmployeeFacade employeeFacade = EmployeeFacade.getInstance(emf);
+  /*
         employeeFacade.createEmployee("Anders And", 25000);
         employeeFacade.createEmployee("Fætter Højben", 28000);
         employeeFacade.createEmployee("Joachim Von And", 28000);
+    */
+        employeeFacade.addCustomer(5, "Bent Ole");
+        employeeFacade.addCustomer(5, "Svend Bent");
+
+
     }
     
     public static void main(String[] args) {

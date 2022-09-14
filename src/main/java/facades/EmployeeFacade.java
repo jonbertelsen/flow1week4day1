@@ -1,6 +1,7 @@
 package facades;
 
 import dtos.EmployeeDTO;
+import entities.Customer;
 import entities.Employee;
 
 import javax.persistence.EntityManager;
@@ -65,13 +66,13 @@ public class EmployeeFacade
         }
     }
 
-    public List<Employee> getAllEmployees()
+    public List<EmployeeDTO> getAllEmployees()
     {
         EntityManager em = getEntityManager();
         try
         {
             TypedQuery<Employee> query = em.createQuery("SELECT e FROM Employee e", Employee.class);
-            return query.getResultList();
+            return EmployeeDTO.getDTOList(query.getResultList());
         }
         finally
         {
@@ -115,8 +116,31 @@ public class EmployeeFacade
         {
             em.close();
         }
-
-
-
     }
+
+    public Employee addCustomer(int employeeId, String customerName)
+    {
+        EntityManager em = getEntityManager();
+
+        try
+        {
+            Employee employee = em.find(Employee.class, employeeId);
+            if (employee == null)
+            {
+                throw new WebApplicationException("Employee doesn't exist with id = " + employeeId);
+            }
+            em.getTransaction().begin();
+                Customer customer = new Customer(customerName);
+                em.persist(customer);
+                employee.addCustomer(customer);
+                //em.merge(employee);  denne behøves ikke, da employee allerede er managed
+            em.getTransaction().commit();
+            return employee;
+        }
+        finally
+        {
+            em.close();
+        }
+    }
+
 }

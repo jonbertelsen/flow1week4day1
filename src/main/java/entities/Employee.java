@@ -96,4 +96,13 @@ public class Employee
     {
         return Objects.hash(getId());
     }
+
+    public void addCustomer(Customer customer)
+    {
+        if (customer != null)
+        {
+            this.customers.add(customer);
+        }
+    }
+
 }

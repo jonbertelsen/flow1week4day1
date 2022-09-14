@@ -1,0 +1,8 @@
+###
+GET http://localhost:8080/restdemo/api/employee/all
+Accept: application/json
+
+###
+GET http://localhost:8080/restdemo/api/employee
+Accept: application/json
+

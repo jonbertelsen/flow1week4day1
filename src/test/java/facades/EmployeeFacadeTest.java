@@ -4,19 +4,19 @@ import dtos.EmployeeDTO;
 import entities.Employee;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.NamedQuery;
-import javax.persistence.Query;
 
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.*;
+
 
 class EmployeeFacadeTest
 {
@@ -66,9 +66,9 @@ class EmployeeFacadeTest
     @Test
     void getAllEmployees()
     {
-        List<Employee> actual = facade.getAllEmployees();
+        List<EmployeeDTO> actual = facade.getAllEmployees();
         assertEquals(3, actual.size());
-        assertThat(actual, containsInAnyOrder(e1, e2, e3));
+        assertThat(actual, containsInAnyOrder( new EmployeeDTO(e1), new EmployeeDTO(e2), new EmployeeDTO(e3)));
     }
 
     @Test
@@ -83,9 +83,10 @@ class EmployeeFacadeTest
     void createEmployee()
     {
         Employee e4 = facade.createEmployee("Andersine", 45000);
-        List<Employee> actual = facade.getAllEmployees();
+        List<EmployeeDTO> actual = facade.getAllEmployees();
         assertEquals(4, actual.size());
-        assertThat(actual, containsInAnyOrder(e1, e2, e3, e4));
+        assertThat(actual, containsInAnyOrder(
+                new EmployeeDTO(e1), new EmployeeDTO(e2), new EmployeeDTO(e3), new EmployeeDTO(e4)));
 
     }
 }
