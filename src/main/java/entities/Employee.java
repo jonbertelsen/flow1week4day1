@@ -82,6 +82,14 @@ public class Employee
         this.customers = customers;
     }
 
+    public void addCustomer(Customer customer)
+    {
+        if (customer != null)
+        {
+            customers.add(customer);
+        }
+    }
+
     @Override
     public boolean equals(Object o)
     {

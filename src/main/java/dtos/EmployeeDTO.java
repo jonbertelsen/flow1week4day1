@@ -1,5 +1,6 @@
 package dtos;
 
+import entities.Customer;
 import entities.Employee;
 
 import javax.validation.constraints.Size;
@@ -17,6 +18,7 @@ public class EmployeeDTO implements Serializable
     @Size(max = 45)
     private final String name;
     private final Integer salary;
+    private List<CustomerDTO> customers;
 
     public EmployeeDTO(Integer id, String name, Integer salary)
     {
@@ -30,12 +32,16 @@ public class EmployeeDTO implements Serializable
         this.id = employee.getId();
         this.name = employee.getName();
         this.salary = employee.getSalary();
+        List<Customer> customerList = new ArrayList<>(employee.getCustomers());
+        customers = CustomerDTO.getDTOs(customerList);
+
     }
 
     public static List<EmployeeDTO> getDTOs(List<Employee> employeeList)
     {
         List<EmployeeDTO> employeeDTOList = new ArrayList<>();
         employeeList.forEach( e -> employeeDTOList.add(new EmployeeDTO((e))) );
+        employeeDTOList.forEach( e -> e.getCustomers().forEach( c -> c.setEmployees(null) ));
         return employeeDTOList;
     }
 
@@ -52,6 +58,11 @@ public class EmployeeDTO implements Serializable
     public Integer getSalary()
     {
         return salary;
+    }
+
+    public List<CustomerDTO> getCustomers()
+    {
+        return customers;
     }
 
     @Override

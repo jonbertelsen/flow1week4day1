@@ -1,10 +1,11 @@
 package facades;
 
+import dtos.CustomerDTO;
 import dtos.EmployeeDTO;
 import dtos.RenameMeDTO;
+import entities.Customer;
 import entities.Employee;
 import entities.RenameMe;
-import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -120,15 +121,46 @@ public class EmployeeFacade
         }
     }
 
+    public EmployeeDTO addCustomer(int employeeId, CustomerDTO customerDTO)
+    {
+        EntityManager em = getEntityManager();
+        Customer customer;
+        Employee employee = em.find(Employee.class, employeeId);
+        if (employee == null)
+            throw new WebApplicationException("Employee with id = " + employeeId + " does not exist");
+
+        if (customerDTO.getId() > 0)
+            customer = em.find(Customer.class, customerDTO.getId());
+        else
+        {
+            customer = new Customer(customerDTO.getName());
+            em.getTransaction().begin();
+                em.persist(customer);
+            em.getTransaction().commit();
+        }
+
+        employee.addCustomer(customer);
+        em.getTransaction().begin();
+            em.merge(employee);
+        em.getTransaction().commit();
+
+        em.close();
+        return new EmployeeDTO(employee);
+    }
+
     public void populateDB(){
         FacadeExample fe = FacadeExample.getFacadeExample(emf);
         fe.create(new RenameMeDTO(new RenameMe("First 1", "Last 1")));
         fe.create(new RenameMeDTO(new RenameMe("First 2", "Last 2")));
         fe.create(new RenameMeDTO(new RenameMe("First 3", "Last 3")));
 
-        createEmployee("Anders And", 25000);
-        createEmployee("Fætter Højben", 28000);
-        createEmployee("Joachim Von And", 30000);
+        EmployeeDTO e1 = createEmployee("Anders And", 25000);
+        EmployeeDTO e2 = createEmployee("Fætter Højben", 28000);
+        EmployeeDTO e3 = createEmployee("Joachim Von And", 30000);
+        addCustomer(e1.getId(), new CustomerDTO("Sven Svin"));
+        addCustomer(e1.getId(), new CustomerDTO("Brd Bisp"));
+        addCustomer(e2.getId(), new CustomerDTO("Reinharts Auto"));
+        addCustomer(e3.getId(), new CustomerDTO("Kurt"));
     }
 
 }

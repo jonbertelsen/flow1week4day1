@@ -34,8 +34,6 @@ public class Customer
         this.name = name;
     }
 
-
-
     public Integer getId()
     {
         return id;
