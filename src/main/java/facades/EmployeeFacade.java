@@ -30,7 +30,7 @@ public class EmployeeFacade
         return emf.createEntityManager();
     }
 
-    public Employee getEmployeeById(int id)
+    public EmployeeDTO getEmployeeById(int id)
     {
         EntityManager em = getEntityManager();
         try
@@ -38,11 +38,11 @@ public class EmployeeFacade
             Employee e = em.find(Employee.class, id);
             if (e != null)
             {
-                return e;
+                return new EmployeeDTO(e);
             }
             else
             {
-                return null;
+                throw new WebApplicationException("Employee with id = " + id + " does not exist");
             }
         }
         finally

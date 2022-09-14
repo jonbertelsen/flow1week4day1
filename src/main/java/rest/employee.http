@@ -1,8 +1,11 @@
-###
+### Get all employees
 GET http://localhost:8080/restdemo/api/employee/all
 Accept: application/json
 
-###
+### Get welcome message
 GET http://localhost:8080/restdemo/api/employee
 Accept: application/json
 
+### Get By ID
+GET http://localhost:8080/restdemo/api/employee/5
+Accept: application/json

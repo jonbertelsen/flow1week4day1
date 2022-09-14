@@ -37,7 +37,17 @@ public class EmployeeResource
         return GSON.toJson(employeeList);
     }
 
+    @GET
+    @Path("{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getById(@PathParam("id") int id)
+    {
+        EmployeeDTO employeeDTO = FACADE.getEmployeeById(id);
+        return GSON.toJson(employeeDTO);
+    }
+
     
+
 
 
 }
